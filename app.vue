@@ -1,7 +1,21 @@
 <script setup lang="ts">
 useHead({
-  title: 'Zip TL',
+  title: 'Zib TL',
+  link: [
+    {
+      rel: 'icon', type: 'image/png', href: '/favicon.png'
+    }
+  ]
 })
+
+useSeoMeta({
+  ogTitle: 'Zib TL',
+  description: '⍙⏚⎐⎍⏚⎅ ⍙⏚⍜⍾⏚⎅ ⍙⏚⏃⟒⏚⎅',
+  ogDescription: '⍙⏚⎐⎍⏚⎅ ⍙⏚⍜⍾⏚⎅ ⍙⏚⏃⟒⏚⎅',
+  ogUrl: 'https://zibtl.vercel.app',
+  ogImage: '/og.jpg'
+})
+
 const kamus: { [key: string]: string } = {
   a: '⏃⟒',
   b: '⏚⎅',
@@ -30,8 +44,10 @@ const kamus: { [key: string]: string } = {
   y: '⏃⊬',
   z: '⍙⏚',
 }
+
 const { textarea: encodeEl, input: encodeField } = useTextareaAutosize()
 const { textarea: decodeEl, input: decodeField } = useTextareaAutosize()
+
 const encode = () => {
   decodeField.value = encodeField.value
     .split('')
@@ -48,6 +64,7 @@ const encode = () => {
     })
     .join('')
 }
+
 const decode = () => {
   let index = 0
   encodeField.value = ''
@@ -73,20 +90,20 @@ const decode = () => {
 }
 
 // @ts-expect-error this unused variable shit is handled by eslint
-const { _text, copy, copied, _isSupported } = useClipboard({ decodeField })
+const { _text, copy, copied, isSupported } = useClipboard({ decodeField })
 </script>
 
 <template>
-  <div class="py-16 bg-[#313338] min-h-screen flex flex-col justify-center items-center gap-4">
+  <div class="min-h-dvh relative flex flex-col justify-center items-center gap-4">
     <textarea
       ref="encodeEl"
       v-model="encodeField"
-      class="bg-[#1e1f22] text-white w-96 h-14 p-4 rounded-2xl outline-none resize-none"
+      class="bg-[#1e1f22] text-white w-96 h-14 p-4 rounded-2xl outline-none resize-none mt-8"
       type="text"
       placeholder="Encode"
       @input="encode"
     />
-    <div class="relative">
+    <div class="relative mb-16">
       <textarea
         ref="decodeEl"
         v-model="decodeField"
@@ -96,13 +113,14 @@ const { _text, copy, copied, _isSupported } = useClipboard({ decodeField })
         @input="decode"
       />
       <Icon
+        v-if="isSupported"
         name="material-symbols:content-copy-outline"
         class="duration-300 text-2xl absolute right-4 top-4"
         :class="copied ? 'text-green-500' : 'cursor-pointer text-[#80848e]'"
         @click="copy(decodeField)"
       />
     </div>
-    <NuxtLink to="https://github.com/yurareru/ziptl" target="_blank" class="absolute bottom-4">
+    <NuxtLink to="https://github.com/yurareru/zibtl" target="_blank" class="absolute bottom-4">
       <Icon
         name="mdi:github"
         class="text-white cursor-pointer text-3xl"

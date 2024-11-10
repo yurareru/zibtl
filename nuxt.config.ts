@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      bodyAttrs: {
+        style: 'background-color: #313338;'
+      }
+    }
+  },
   modules: [
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
